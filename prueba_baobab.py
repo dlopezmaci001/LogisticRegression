@@ -30,16 +30,16 @@ import collections
 from sklearn.preprocessing import MinMaxScaler
 
 #Definir directorio
-os.chdir('C:/Users/daniel.lopez/Desktop/IE')
+os.chdir('C:/Users/Daniel/Documents/GitHub/LogisticRegression')
 
 #Cargar datos 
 df_org = pd.read_csv('baobab_prueba.csv', sep = ';')
 
-#Convert target variable from good/bad to 1/0
+#Convertirt arget de good/bad a 1/0
 df_org['Type'] = df_org['Type'].replace('good',0)
 df_org['Type'] = df_org['Type'].replace('bad',1)
 
-# Transform other variables 
+# Transformar otras variables 
 df_org['Telephone'] = df_org['Telephone'].replace('none',0)
 df_org['Telephone'] = df_org['Telephone'].replace('yes',1)
 
@@ -122,6 +122,8 @@ plt.title('SVD', fontsize=14)
 Tampoco vemos una clara relación
 """
 
+##############################################################################
+
 ###############################################################################
 # Modelos
 ###############################################################################
@@ -199,9 +201,9 @@ model.fit(X_train[variables_usar],y_train)
 y_pred = model.predict_proba(X_test[variables_usar])[:,1]
 
 """
-Teniendo en cuenta que contamos con un test bastante desquilibrado y que si,
+Teniendo en cuenta que contamos con unos datos bastante desquilibrado y que si,
 de manera aleatoria decidiesemos clasificar a los clientes obtendríamos una 
-precisión del 70% (700 buenos 300 malos)definiremos el threshold como 0.7
+precisión del 70% (700 buenos 300 malos) definiremos el threshold como 0.7
 """
 
 y_predict = np.where(y_pred > 0.7,1,0)
@@ -218,6 +220,11 @@ sns.heatmap(pd.DataFrame(matriz), annot = True, cmap = 'Blues', fmt = 'd')
 plt.xlabel('Predicted')
 plt.ylabel('Expected')
 plt.show()
+"""
+El modelo no es demasiado bueno pero obtenemos mejores resultados de precisión
+que asimiendo que todos los clientes son buenos
+"""
+
 
 ###############################################################################
 # Probamos otros modelos 
